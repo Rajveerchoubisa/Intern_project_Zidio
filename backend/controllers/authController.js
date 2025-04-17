@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password,role } = req.body;
 
   try {
     const existing = await User.findOne({ email }); //finding user by email
@@ -13,7 +13,7 @@ export const registerUser = async (req, res) => {
     //now password hashing for new user
     const hashed = await bcrypt.hash(password,10);
     //new user creation with hashed password store
-    const newUser = await User.create({name,email,password:hashed});
+    const newUser = await User.create({name,email,password:hashed,role});
 
     res.status(201).json({msg:"User created Successfully",user:newUser});
 
@@ -46,3 +46,19 @@ export const loginUser = async(req,res) =>{
     }
 };
 
+export const getAllUsers = async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
+};
+
+export const deleteUser = async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    await user.remove();
+    res.json({ message: 'User removed' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+};

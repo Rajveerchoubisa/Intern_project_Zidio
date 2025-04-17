@@ -10,7 +10,7 @@ import { protect, admin } from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 router.post('/', protect, createOrder); // User places order
-router.get('/myorders', protect, getMyOrders); // View own orders
+router.get('/my-orders', protect, getMyOrders); // View own orders
 router.get('/', protect, admin, getAllOrders); // Admin gets all orders
 router.put('/:orderId', protect, admin, updateOrderStatus); // Admin updates status
 
