@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Zidio Developement Intern Project ",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
@@ -15,7 +16,8 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.2"
+    "mongoose": "^8.13.2",
+    "stripe": "^18.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

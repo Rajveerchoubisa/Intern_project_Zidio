@@ -8,13 +8,17 @@ import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import stripeRoutes from './routes/stripeRoutes.js'
 
 
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173", // your frontend URL
+    credentials: true,
+  }));
 app.use(express.json());
 
 connectDB();
@@ -25,6 +29,9 @@ mongoose.connect(process.env.MONGO_URI,{ useNewUrlParser: true})
     .then(() => console.log("MongoDB connected"))
     .catch(err => console.log(err));
 
+
+
+app.use('/api',stripeRoutes)
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
