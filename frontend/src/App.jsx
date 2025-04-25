@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Shop from "./pages/Shop.jsx";
 import CustomerProfile from "./pages/Customerprofile.jsx";
 import ProductCategories from './pages/ProductCategories';
-import Cart from './pages/Cart.jsx'
+import Cart from  './pages/Cart.jsx'
 import Success from "./pages/Success.jsx";
 import Cancel from "./pages/Cancel.jsx";
 

@@ -37,7 +37,7 @@ router.post("/create-checkout-session", async (req, res) => {
 
     res.json({ url: session.url });
   } catch (err) {
-    console.error("Stripe session error:", err); // 🐞 See exact error in terminal
+    console.error("Stripe session error:", err); // 
     res.status(500).json({ error: err.message });
   }
 });
