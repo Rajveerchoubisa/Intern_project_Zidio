@@ -24,6 +24,7 @@ import {
 import { FaUserEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
 
 const CustomerProfile = () => {
   const [user, setUser] = useState(null);
@@ -190,11 +191,24 @@ const CustomerProfile = () => {
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel>Avatar URL</FormLabel>
+                  <FormLabel>Avatar</FormLabel>
                   <Input
-                    name="avatar"
-                    value={formData.avatar}
-                    onChange={handleChange}
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        try {
+                          const imageUrl = await uploadToCloudinary(file);
+                          setFormData((prev) => ({
+                            ...prev,
+                            avatar: imageUrl,
+                          }));
+                        } catch (error) {
+                          console.error("Image upload failed:", error);
+                        }
+                      }
+                    }}
                   />
                 </FormControl>
               </Stack>
