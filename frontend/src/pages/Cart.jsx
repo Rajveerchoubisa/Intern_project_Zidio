@@ -35,7 +35,7 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/create-checkout-session", {
+      const response = await axios.post("http://localhost:5000/api/stripe/create-checkout-session", {
         cartItems: cartItems.map(({ title, price, image, quantity }) => ({
           title,
           price: parseInt(price.toString().replace("₹", "")),
@@ -71,7 +71,7 @@ const Cart = () => {
               <Image src={item.image} boxSize="100px" />
               <Box flex="1">
                 <Text fontWeight="bold">{item.title}</Text>
-                <Text>Price: ₹{item.price}</Text>
+                <Text>Price: {item.price}</Text>
                 <HStack mt={2}>
                   <IconButton
                     size="sm"
