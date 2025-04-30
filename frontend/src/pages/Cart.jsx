@@ -36,8 +36,8 @@ const Cart = () => {
   const handleCheckout = async () => {
     try {
       const response = await axios.post("http://localhost:5000/api/stripe/create-checkout-session", {
-        cartItems: cartItems.map(({ title, price, image, quantity }) => ({
-          title,
+        cartItems: cartItems.map(({ name, price, image, quantity }) => ({
+          name,
           price: parseInt(price.toString().replace("₹", "")),
           image,
           quantity,

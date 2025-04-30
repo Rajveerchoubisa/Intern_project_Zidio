@@ -40,7 +40,15 @@ export const loginUser = async(req,res) =>{
 
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'7d'});
 
-        res.json({token , user});
+        res.json({
+          user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,    // 👈 VERY IMPORTANT
+          },
+          token,
+        });
     } catch (error) {
         res.status(500).json({msg:'Login error',error:error.message});
     }
@@ -63,4 +71,20 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+
+export const updateShippingAddress = async (req, res) => {
+  const { fullName, address, city, postalCode, country } = req.body;
+
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ msg: "User not found" });
+
+    user.shippingAddress = { fullName, address, city, postalCode, country };
+    await user.save();
+
+    res.json({ msg: "Shipping address updated", shippingAddress: user.shippingAddress });
+  } catch (error) {
+    res.status(500).json({ msg: "Failed to update address", error: error.message });
+  }
+};
 

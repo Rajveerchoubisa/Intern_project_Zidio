@@ -29,6 +29,9 @@ import { uploadToCloudinary } from "../utils/uploadToCloudinary.js";
 const CustomerProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -36,6 +39,8 @@ const CustomerProfile = () => {
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+
+ 
 
   const fetchProfile = async () => {
     try {

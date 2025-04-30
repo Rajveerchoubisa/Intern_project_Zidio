@@ -9,6 +9,7 @@ const orderSchema = new mongoose.Schema({
       sessionId:String
     }
   ],
+  status: { type: String, enum: ["Pending", "Shipped", "Delivered"], default: "Pending" },
   shippingAddress: {
     fullName: { type: String, required: true },
     address: { type: String, required: true },

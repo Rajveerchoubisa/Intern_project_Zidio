@@ -7,6 +7,9 @@ import {
 } from "../controllers/authController.js";
 import { protect, admin } from "../middlewares/authMiddleware.js";
 import User from "../models/userModels.js";
+import { updateShippingAddress } from "../controllers/authController.js";
+
+
 
 const router = express.Router();
 
@@ -45,4 +48,9 @@ router.put("/update-profile", protect, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
+router.put("/update-address", protect, updateShippingAddress);
+
+
 export default router;

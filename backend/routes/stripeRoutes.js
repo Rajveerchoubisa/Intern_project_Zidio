@@ -14,8 +14,8 @@ router.post("/create-checkout-session", async (req, res) => {
 
   try {
     const cleanedCartItems = cartItems.map(item => ({
-      title: item.title,
-      image: item.image,
+      name: item.name,
+      images: item.image,
       quantity: item.quantity || 1,
       price: typeof item.price === 'string' 
         ? parseInt(item.price.replace(/[^\d]/g, ""), 10)  // remove ₹ symbol, parse safely
@@ -31,7 +31,7 @@ router.post("/create-checkout-session", async (req, res) => {
         price_data: {
           currency: "inr",
           product_data: {
-            name: item.title,
+            name: item.name,
             images: [item.image],
           },
           unit_amount: item.price * 100, // now safe number

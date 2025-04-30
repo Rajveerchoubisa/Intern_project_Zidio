@@ -28,12 +28,20 @@ import {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
         });
+        console.log("Login response:", res.data); 
         const data = await res.json();
   
         if (res.ok) {
+          localStorage.setItem('User', JSON.stringify({
+            name: data.user.name,
+            email: data.user.email,
+            role: data.user.role,
+          }));
           localStorage.setItem('token', data.token);
-          localStorage.setItem('role', data.role);
-  
+          
+          // localStorage.setItem('token', data.token);
+          // localStorage.setItem('User', JSON.stringify(data.user));
+
           toast({
             title: 'Login successful!',
             status: 'success',
@@ -42,8 +50,13 @@ import {
           });
   
           // Redirect based on role
-          if (data.role === 'admin') navigate('/admin');
-          else navigate('/shop');
+          //console.log('User role:', data.role);
+          if (data.user.role === 'admin'){
+            navigate('/admin/dashboard');
+          } 
+          else if(data.user.role === 'customer') {
+            navigate('/shop'); 
+          }
         } else {
           toast({
             title: 'Login failed',
