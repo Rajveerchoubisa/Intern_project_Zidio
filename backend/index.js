@@ -9,6 +9,7 @@ import cartRoutes from './routes/cartRoutes.js';
 import wishlistRoutes from './routes/wishlistRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import stripeRoutes from './routes/stripeRoutes.js'
+import couponRoutes from './routes/couponRoutes.js';
 
 
 
@@ -37,6 +38,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/orders', orderRoutes);
+
+app.use("/api/coupons", couponRoutes);
 
 app.get('/',(req,res) => res.send('Zidio API running'));
 

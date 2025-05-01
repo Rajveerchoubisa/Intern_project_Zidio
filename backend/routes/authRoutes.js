@@ -17,6 +17,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/", protect, admin, getAllUsers);
 router.delete("/:id", protect, admin, deleteUser);
+
 router.get("/me", protect, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password"); // exclude password

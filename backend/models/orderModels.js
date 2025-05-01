@@ -6,17 +6,22 @@ const orderSchema = new mongoose.Schema({
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
       quantity: { type: Number, required: true },
-      sessionId:String
+      
     }
   ],
   status: { type: String, enum: ["Pending", "Shipped", "Delivered"], default: "Pending" },
-  shippingAddress: {
-    fullName: { type: String, required: true },
-    address: { type: String, required: true },
-    city: { type: String, required: true },
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true }
+  sessionId: {
+    type: String,
+    required: true,
+    unique: true, 
   },
+  // shippingAddress: {
+  //   fullName: { type: String, required: true },
+  //   address: { type: String, required: true },
+  //   city: { type: String, required: true },
+  //   postalCode: { type: String, required: true },
+  //   country: { type: String, required: true }
+  // },
   paymentMethod: { type: String, required: true },
   paymentStatus: { type: String, default: 'Pending' },
   isDelivered: { type: Boolean, default: false },

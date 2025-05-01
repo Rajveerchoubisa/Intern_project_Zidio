@@ -47,19 +47,36 @@ export const getAllOrders = async (req, res) => {
   res.json(orders);
 };
 
+// export const updateOrderStatus = async (req, res) => {
+//   const { orderId } = req.params;
+//   const { isDelivered } = req.body;
+
+//   const order = await Order.findById(orderId);
+//   if (!order) return res.status(404).json({ msg: 'Order not found' });
+
+//   order.isDelivered = isDelivered;
+//   if (isDelivered) {
+//     order.deliveredAt = Date.now();
+//     order.paymentStatus = 'Paid';
+//   }
+
+//   await order.save();
+//   res.json(order);
+// };
 export const updateOrderStatus = async (req, res) => {
   const { orderId } = req.params;
-  const { isDelivered } = req.body;
+  const { status } = req.body;
 
   const order = await Order.findById(orderId);
   if (!order) return res.status(404).json({ msg: 'Order not found' });
 
-  order.isDelivered = isDelivered;
-  if (isDelivered) {
+  order.status = status;
+  if (status === "Delivered") {
+    order.isDelivered = true;
     order.deliveredAt = Date.now();
-    order.paymentStatus = 'Paid';
+    order.paymentStatus = "Paid";
   }
 
   await order.save();
-  res.json(order);
+  res.json(order); // ✅ return updated order
 };

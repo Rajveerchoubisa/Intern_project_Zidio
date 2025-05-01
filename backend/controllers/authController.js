@@ -53,10 +53,13 @@ export const loginUser = async(req,res) =>{
         res.status(500).json({msg:'Login error',error:error.message});
     }
 };
-
 export const getAllUsers = async (req, res) => {
-  const users = await User.find({});
-  res.json(users);
+  try {
+    const customers = await User.find({ role: "customer" });
+    res.json(customers);
+  } catch (err) {
+    res.status(500).json({ msg: "Failed to fetch users", error: err.message });
+  }
 };
 
 export const deleteUser = async (req, res) => {

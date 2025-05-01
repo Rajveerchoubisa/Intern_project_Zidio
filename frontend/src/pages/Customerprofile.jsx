@@ -30,17 +30,21 @@ const CustomerProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     avatar: "",
+    shippingAddress: {
+      fullName: "",
+      address: "",
+      city: "",
+      postalCode: "",
+      country: ""
+    }
   });
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-
- 
 
   const fetchProfile = async () => {
     try {
@@ -55,6 +59,13 @@ const CustomerProfile = () => {
         name: response.data.name,
         email: response.data.email,
         avatar: response.data.avatar || "",
+        shippingAddress: response.data.shippingAddress || {
+          fullName: "",
+          address: "",
+          city: "",
+          postalCode: "",
+          country: ""
+        }
       });
     } catch (error) {
       console.error("Failed to fetch profile:", error);
@@ -68,10 +79,19 @@ const CustomerProfile = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    if (name.includes("address.")) {
+      const key = name.split(".")[1];
+      setFormData((prev) => ({
+        ...prev,
+        address: {
+          ...prev.address,
+          [key]: value
+        }
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleUpdateProfile = async () => {
@@ -162,10 +182,22 @@ const CustomerProfile = () => {
         <Text fontWeight="bold" color="gray.700" mb={6}>
           Role: <span style={{ color: "#FF4E50" }}>{user.role}</span>
         </Text>
+
+        {/* Display Address Info */}
+        <Box mt={4}  textAlign="left">
+          <Heading fontSize="md" mb={2}>Shipping Address</Heading>
+          <Text><strong>Name:</strong> {formData.shippingAddress?.fullName}</Text>
+          <Text><strong>Address:</strong> {formData.shippingAddress?.address}</Text>
+          <Text><strong>City:</strong> {formData.shippingAddress?.city}</Text>
+          <Text><strong>Postal Code:</strong> {formData.shippingAddress?.postalCode}</Text>
+          <Text><strong>Country:</strong> {formData.shippingAddress?.country}</Text>
+        </Box>
+
         <Button
           leftIcon={<Icon as={FaUserEdit} />}
           colorScheme="teal"
           variant="solid"
+          mt={6}
           onClick={onOpen}
         >
           Edit Profile
@@ -181,19 +213,11 @@ const CustomerProfile = () => {
               <Stack spacing={4}>
                 <FormControl>
                   <FormLabel>Name</FormLabel>
-                  <Input
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
+                  <Input name="name" value={formData.name} onChange={handleChange} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Email</FormLabel>
-                  <Input
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
+                  <Input name="email" value={formData.email} onChange={handleChange} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Avatar</FormLabel>
@@ -215,6 +239,28 @@ const CustomerProfile = () => {
                       }
                     }}
                   />
+                </FormControl>
+
+                <Heading size="sm" mt={4}>Shipping Address</Heading>
+                <FormControl>
+                  <FormLabel>Full Name</FormLabel>
+                  <Input name="address.fullName" value={formData.shippingAddress.fullName} onChange={handleChange} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Street Address</FormLabel>
+                  <Input name="address.address" value={formData.shippingAddress.address} onChange={handleChange} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>City</FormLabel>
+                  <Input name="address.city" value={formData.shippingAddress.city} onChange={handleChange} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Postal Code</FormLabel>
+                  <Input name="address.postalCode" value={formData.shippingAddress.postalCode} onChange={handleChange} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Country</FormLabel>
+                  <Input name="address.country" value={formData.shippingAddress.country} onChange={handleChange} />
                 </FormControl>
               </Stack>
             </ModalBody>

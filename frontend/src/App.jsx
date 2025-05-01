@@ -19,6 +19,8 @@ import AdminProducts from "./pages/AdminProduct.jsx";
 import AddProduct from "./pages/AddProduct.jsx";
 import EditProduct from "./pages/EditProduct.jsx";
 import ManageOrders from "./pages/ManageOrders.jsx";
+import AdminUsers from "./pages/AdminUsers.jsx";
+import AdminCoupons from "./pages/AdminCoupons.jsx";
 
 function App() {
   return (
@@ -76,6 +78,18 @@ function App() {
           }
         />
         <Route path="/admin/orders" element={<ManageOrders />} />
+
+        <Route
+          path="/admin/users"
+          element={
+            <AdminProtectedRoute allowedRoles={["admin"]}>
+              <AdminUsers />
+            </AdminProtectedRoute>
+          }
+        />
+        <Route path="/admin/coupons" element = {<AdminCoupons
+          />
+        }/>
       </Routes>
     </Router>
   );

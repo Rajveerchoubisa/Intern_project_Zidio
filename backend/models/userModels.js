@@ -1,13 +1,7 @@
 // 📁 server/models/userModels.js
 import mongoose from "mongoose";
 
-const addressSchema = new mongoose.Schema({
-  fullName: String,
-  address: String,
-  city: String,
-  postalCode: String,
-  country: String
-});
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,7 +10,18 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     avatar: { type: String },
     role: { type: String, enum: ["customer", "admin"] },
-    shippingAddress: addressSchema // ✅ added
+    shippingAddress:  {
+      fullName: String,
+      address: String,
+      city: String,
+      postalCode: String,
+      country: String,
+    }, 
+    // paymentMethod: { type: String, required: true },
+    // paymentStatus: { type: String, default: 'Pending' },
+    // isDelivered: { type: Boolean, default: false },
+    // deliveredAt: Date,
+    // totalPrice: { type: Number, required: true },
   },
   { timestamps: true }
 );

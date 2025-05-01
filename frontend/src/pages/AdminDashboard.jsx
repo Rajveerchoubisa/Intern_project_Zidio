@@ -10,19 +10,19 @@ const AdminDashboard = () => {
       <Box w="250px" bg="purple.600" color="white" p={6}>
         <VStack spacing={5} align="stretch">
           <Text fontSize="xl" fontWeight="bold">Admin Panel</Text>
-          <Button as={RouterLink} to="/admin/products" colorScheme="purple" variant="outline">
+          <Button as={RouterLink} to="/admin/products" color={"black"}  colorScheme="purple" variant="outline">
             Manage Products
           </Button>
-          <Button as={RouterLink} to="/admin/orders" colorScheme="purple" variant="outline">
+          <Button as={RouterLink} to="/admin/orders" color={"black"} colorScheme="purple" variant="outline">
             Manage Orders
           </Button>
-          <Button as={RouterLink} to="/admin/users" colorScheme="purple" variant="outline">
+          <Button as={RouterLink} to="/admin/users" color={"black"} colorScheme="purple" variant="outline">
             Manage Users
           </Button>
-          <Button as={RouterLink} to="/admin/coupons" colorScheme="purple" variant="outline">
+          <Button as={RouterLink} to="/admin/coupons" color={"black"} colorScheme="purple" variant="outline">
             Manage Coupons
           </Button>
-          <Button as={RouterLink} to="/admin/analytics" colorScheme="purple" variant="outline">
+          <Button as={RouterLink} to="/admin/analytics" color={"black"}  colorScheme="purple" variant="outline">
             Analytics
           </Button>
         </VStack>
