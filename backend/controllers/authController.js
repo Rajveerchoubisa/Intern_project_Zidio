@@ -76,18 +76,24 @@ export const deleteUser = async (req, res) => {
 
 
 export const updateShippingAddress = async (req, res) => {
-  const { fullName, address, city, postalCode, country } = req.body;
 
   try {
     const user = await User.findById(req.user._id);
-    if (!user) return res.status(404).json({ msg: "User not found" });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-    user.shippingAddress = { fullName, address, city, postalCode, country };
-    await user.save();
+    // ✅ Update shippingAddress if provided
+    if (req.body.shippingAddress) {
+      user.shippingAddress = {
+        ...user.shippingAddress,
+        ...req.body.shippingAddress,
+      };
+    }
 
-    res.json({ msg: "Shipping address updated", shippingAddress: user.shippingAddress });
+    const updatedUser = await user.save();
+
+    res.json({ user: updatedUser });
   } catch (error) {
-    res.status(500).json({ msg: "Failed to update address", error: error.message });
+    res.status(500).json({ message: "Failed to update profile", error: error.message });
   }
 };
 

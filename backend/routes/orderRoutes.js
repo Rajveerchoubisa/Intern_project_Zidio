@@ -1,7 +1,6 @@
 import express from 'express';
 import {
   createOrder,
-  getMyOrders,
   getAllOrders,
   updateOrderStatus
 } from '../controllers/orderController.js';
@@ -11,7 +10,7 @@ import Order from '../models/orderModels.js'
 const router = express.Router();
 
 router.post('/', protect, createOrder); // User places order
-router.get('/my-orders', protect, getMyOrders); // View own orders
+// router.get('/my-orders', protect, getMyOrders); // View own orders
 router.get('/', protect, admin, getAllOrders); // Admin gets all orders
 router.put('/:orderId', protect, admin, updateOrderStatus); // Admin updates status
 
@@ -23,5 +22,16 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// GET /api/orders/my-orders
+router.get("/my-orders", protect, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.user._id }).populate("orderItems.product").populate("user", "name email shippingAddress");;
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ msg: "Failed to fetch orders", error: error.message });
+  }
+});
+
 
 export default router;

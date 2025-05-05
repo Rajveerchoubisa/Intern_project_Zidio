@@ -10,13 +10,14 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     avatar: { type: String },
     role: { type: String, enum: ["customer", "admin"] },
-    shippingAddress:  {
+    shippingAddress: [ {
       fullName: String,
       address: String,
       city: String,
       postalCode: String,
       country: String,
     }, 
+  ]
     // paymentMethod: { type: String, required: true },
     // paymentStatus: { type: String, default: 'Pending' },
     // isDelivered: { type: Boolean, default: false },

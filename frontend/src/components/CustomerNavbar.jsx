@@ -47,6 +47,16 @@ const CustomerNavbar = () => {
         >
           Categories
         </Button>
+
+        <Button
+          colorScheme="blue"
+          variant="solid"
+          mr={3}
+          onClick={() => navigate("/my-orders")}
+        >
+          My-Orders
+        </Button>
+        
         <IconButton
           icon={<FaUser />}
           colorScheme="purple"
@@ -62,6 +72,8 @@ const CustomerNavbar = () => {
         onClick={() => navigate('/cart')}
         mr={2}
         /> 
+
+
         <IconButton
           icon={<FaSignOutAlt />}
           colorScheme="red"

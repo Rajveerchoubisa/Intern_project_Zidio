@@ -22,6 +22,7 @@ import ManageOrders from "./pages/ManageOrders.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
 import AdminCoupons from "./pages/AdminCoupons.jsx";
 import AdminAnalytics from "./pages/AdminAnalytics.jsx";
+import MyOrders from "./pages/MyOrder.jsx";
 
 function App() {
   return (
@@ -88,11 +89,11 @@ function App() {
             </AdminProtectedRoute>
           }
         />
-        <Route path="/admin/coupons" element = {<AdminCoupons
-          />
-        }/>
+        <Route path="/admin/coupons" element={<AdminCoupons />} />
 
-        <Route path="admin/analytics" element = {<AdminAnalytics />} />
+        <Route path="admin/analytics" element={<AdminAnalytics />} />
+
+        <Route path="/my-orders" element={<MyOrders />} />
       </Routes>
     </Router>
   );

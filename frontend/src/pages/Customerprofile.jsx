@@ -80,19 +80,21 @@ const CustomerProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.includes("address.")) {
-      const key = name.split(".")[1];
+  
+    if (name.startsWith("shippingAddress.")) {
+      const field = name.split(".")[1];
       setFormData((prev) => ({
         ...prev,
-        address: {
-          ...prev.address,
-          [key]: value
+        shippingAddress: {
+          ...prev.shippingAddress,
+          [field]: value
         }
       }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
+  
 
   const handleUpdateProfile = async () => {
     try {
@@ -244,23 +246,23 @@ const CustomerProfile = () => {
                 <Heading size="sm" mt={4}>Shipping Address</Heading>
                 <FormControl>
                   <FormLabel>Full Name</FormLabel>
-                  <Input name="address.fullName" value={formData.shippingAddress.fullName} onChange={handleChange} />
+                  <Input name="shippingAddress.fullName" value={formData.shippingAddress.fullName} onChange={handleChange} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Street Address</FormLabel>
-                  <Input name="address.address" value={formData.shippingAddress.address} onChange={handleChange} />
+                  <Input name="shippingAddress.address" value={formData.shippingAddress.address} onChange={handleChange} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>City</FormLabel>
-                  <Input name="address.city" value={formData.shippingAddress.city} onChange={handleChange} />
+                  <Input name="shippingAddress.city" value={formData.shippingAddress.city} onChange={handleChange} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Postal Code</FormLabel>
-                  <Input name="address.postalCode" value={formData.shippingAddress.postalCode} onChange={handleChange} />
+                  <Input name="shippingAddress.postalCode" value={formData.shippingAddress.postalCode} onChange={handleChange} />
                 </FormControl>
                 <FormControl>
                   <FormLabel>Country</FormLabel>
-                  <Input name="address.country" value={formData.shippingAddress.country} onChange={handleChange} />
+                  <Input name="shippingAddress.country" value={formData.shippingAddress.country} onChange={handleChange} />
                 </FormControl>
               </Stack>
             </ModalBody>
