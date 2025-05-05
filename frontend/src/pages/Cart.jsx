@@ -418,7 +418,7 @@ const Cart = () => {
             >
               <Image src={item.image} boxSize="100px" />
               <Box flex="1">
-                <Text fontWeight="bold">{item.title}</Text>
+                <Text fontWeight="bold">{item.name}</Text>
                 <Text>Price: {item.price}</Text>
                 <HStack mt={2}>
                   <IconButton

@@ -21,6 +21,7 @@ import EditProduct from "./pages/EditProduct.jsx";
 import ManageOrders from "./pages/ManageOrders.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
 import AdminCoupons from "./pages/AdminCoupons.jsx";
+import AdminAnalytics from "./pages/AdminAnalytics.jsx";
 
 function App() {
   return (
@@ -90,6 +91,8 @@ function App() {
         <Route path="/admin/coupons" element = {<AdminCoupons
           />
         }/>
+
+        <Route path="admin/analytics" element = {<AdminAnalytics />} />
       </Routes>
     </Router>
   );

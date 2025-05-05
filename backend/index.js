@@ -10,7 +10,7 @@ import wishlistRoutes from './routes/wishlistRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import stripeRoutes from './routes/stripeRoutes.js'
 import couponRoutes from './routes/couponRoutes.js';
-
+import analyticsRoutes from './routes/analyticsRoutes.js';
 
 
 dotenv.config();
@@ -40,6 +40,9 @@ app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/orders', orderRoutes);
 
 app.use("/api/coupons", couponRoutes);
+
+
+app.use("/api/analytics", analyticsRoutes);
 
 app.get('/',(req,res) => res.send('Zidio API running'));
 
