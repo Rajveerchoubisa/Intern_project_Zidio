@@ -26,7 +26,11 @@ router.post('/', async (req, res) => {
 // GET /api/orders/my-orders
 router.get("/my-orders", protect, async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).populate("orderItems.product").populate("user", "name email shippingAddress");;
+    const orders = await Order.find({ user: req.user._id }).populate({
+      path: "user",
+      select: "name email shippingAddress" // 👈 include shippingAddress here
+    })
+    .populate("orderItems.product");
     res.json(orders);
   } catch (error) {
     res.status(500).json({ msg: "Failed to fetch orders", error: error.message });

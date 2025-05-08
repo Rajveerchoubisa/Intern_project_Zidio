@@ -13,22 +13,22 @@ import {
   
   const tshirtProducts = [
     {
-      title: 'Oversized Tee',
+      name: 'Oversized Tee',
       price: '₹699',
       image: 'https://via.placeholder.com/200x200.png?text=Oversized+Tee',
     },
     {
-      title: 'Graphic Printed',
+      name: 'Graphic Printed',
       price: '₹799',
        image: 'https://via.placeholder.com/200x200.png?text=Graphic+Tee',
     },
     {
-      title: 'Polo T-Shirt',
+      name: 'Polo T-Shirt',
       price: '₹999',
       image: 'https://via.placeholder.com/200x200.png?text=Polo+Tee',
     },
     {
-      title: 'Crop Top (Women)',
+      name: 'Crop Top (Women)',
       price: '₹599',
       image: 'https://via.placeholder.com/200x200.png?text=Crop+Top',
     },
@@ -36,38 +36,38 @@ import {
   
   const themeProducts = [
     {
-      title: 'Marvel Universe Tee',
+      name: 'Marvel Universe Tee',
       price: '₹899',
       image: 'https://via.placeholder.com/200x200.png?text=Marvel+Tee',
     },
     {
-      title: 'Anime Hero Tee',
+      name: 'Anime Hero Tee',
       price: '₹799',
       image: 'https://via.placeholder.com/200x200.png?text=Anime+Tee',
     },
     {
-      title: 'Classic Comic Tee',
+      name: 'Classic Comic Tee',
       price: '₹849',
       image: 'https://via.placeholder.com/200x200.png?text=Classic+Tee',
     },
     {
-      title: 'Star Wars Tee',
+      name: 'Star Wars Tee',
       price: '₹999',
       image: 'https://via.placeholder.com/200x200.png?text=Sci-Fi+Tee',
     },
   ];
   
-  const ProductCard = ({ title, price, image }) => { 
+  const ProductCard = ({ name, price, image }) => { 
     
     const {addToCart} = useCart();
     const toast = useToast();
 
     const handleAddToCart = () => {
-        addToCart({title,price,image});
+        addToCart({name,price,image});
 
         toast({
             title: "Added to cart",
-            description: `${title} has been added to your cart.`,
+            description: `${name} has been added to your cart.`,
             status: "success",
             duration: 2000,
             isClosable: true,
@@ -85,10 +85,10 @@ import {
       shadow="md"
       _hover={{ transform: 'scale(1.02)', transition: '0.2s ease-in-out' }}
     >
-      <Image src={image} alt={title} objectFit="cover" w="100%" h="200px" />
+      <Image src={image} alt={name} objectFit="cover" w="100%" h="200px" />
       <Box p="4">
         <Heading size="md" mb="2">
-          {title}
+          {name}
         </Heading>
         <Text fontWeight="bold" mb="3" color="teal.600">
           {price}

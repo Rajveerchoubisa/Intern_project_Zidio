@@ -74,15 +74,15 @@ const MyOrders = () => {
               <VStack align="start" spacing={1}>
                 {order.orderItems.map((item, idx) => (
                   <Text key={idx}>
-                    - Product ID: {item.product.name} × {item.quantity}
+                    Product :{item.product?.name || "N/A"} × {item.quantity}
                   </Text>
                 ))}
               </VStack>
 
               <Text mt={3}>Total: ₹{order.totalPrice}</Text>
               <Text fontSize="sm" color="gray.600">
-                Shipping to: {order.user?.shippingAddress?.address},{" "}
-                {order.user?.shippingAddress?.city}
+                Shipping to: {order.shippingAddress?.address},{" "}
+                {order.shippingAddress?.city}
               </Text>
             </Box>
           ))}

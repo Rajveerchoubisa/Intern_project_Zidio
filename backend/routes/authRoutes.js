@@ -59,4 +59,13 @@ router.put("/update-profile", protect, async (req, res) => {
 // router.put("/update-address", protect, updateShippingAddress);
 
 
+router.delete("/delete-address/:index", protect, async (req, res) => {
+  const user = await User.findById(req.user.id);
+  if (!user) return res.status(404).json({ msg: "User not found" });
+
+  user.shippingAddress.splice(req.params.index, 1);
+  await user.save();
+  res.json({ message: "Address deleted", shippingAddress: user.shippingAddress });
+});
+
 export default router;

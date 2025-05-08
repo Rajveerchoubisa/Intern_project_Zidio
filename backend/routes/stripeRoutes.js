@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import dotenv from 'dotenv';
 import User from '../models/userModels.js'
 import Order from '../models/orderModels.js'
+import Coupon from '../models/couponModels.js'
 
 dotenv.config();
 const router = express.Router();
@@ -12,7 +13,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // Create checkout session
 router.post("/create-checkout-session", async (req, res) => {
   const { cartItems } = req.body;
-  console.log("Received cartItems:", cartItems);
+  const {coupon} = req.body;
+  const {shippingAddress} = req.body;
+
+  // console.log("Received cartItems:", cartItems);
 
   try {
     const cleanedCartItems = cartItems.map(item => ({
@@ -23,8 +27,19 @@ router.post("/create-checkout-session", async (req, res) => {
         ? parseInt(item.price.replace(/[^\d]/g, ""), 10)  // remove ₹ symbol, parse safely
         : item.price, // already number
     }));
+    const subtotal = cleanedCartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-    console.log("🧼 Cleaned Cart Items:", cleanedCartItems);
+    let discount = 0;
+    if (coupon) {
+      const couponData = await Coupon.findOne({ code: coupon });
+      if (couponData) {
+        discount = Math.floor((subtotal * couponData.discount) / 100);
+      }
+    }
+
+    const finalAmount = subtotal - discount;
+
+    // console.log("🧼 Cleaned Cart Items:", cleanedCartItems);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -36,7 +51,7 @@ router.post("/create-checkout-session", async (req, res) => {
             name: item.name,
             images: [item.image],
           },
-          unit_amount: item.price * 100, // now safe number
+          unit_amount: finalAmount * 100, // now safe number
         },
         quantity: item.quantity,
       })),
@@ -44,8 +59,12 @@ router.post("/create-checkout-session", async (req, res) => {
       cancel_url: "http://localhost:5173/cancel",
       metadata: {
         cart: JSON.stringify(cartItems),
+        shippingAddress: JSON.stringify(shippingAddress),
+        appliedCoupon: coupon || "",
       }
     });
+
+    
 
     res.json({ url: session.url });
 
@@ -76,6 +95,7 @@ router.get('/session/:id', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(req.params.id);
     const cart = JSON.parse(session.metadata.cart);
+    const shippingAddress = JSON.parse(session.metadata.shippingAddress);
 
     // ✅ Avoid duplicate orders
     const existingOrder = await Order.findOne({ sessionId: session.id });
@@ -97,7 +117,7 @@ router.get('/session/:id', async (req, res) => {
         product: item.productId,
         quantity: item.quantity,
       })),
-      shippingAddress: user.address,
+      shippingAddress,
       paymentMethod: "Online",
       paymentStatus: session.payment_status,
       isDelivered: false,

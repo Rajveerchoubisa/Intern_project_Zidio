@@ -33,14 +33,7 @@ const CustomerProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    avatar: "",
-    shippingAddress: {
-      fullName: "",
-      address: "",
-      city: "",
-      postalCode: "",
-      country: ""
-    }
+    avatar: ""
   });
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,14 +51,7 @@ const CustomerProfile = () => {
       setFormData({
         name: response.data.name,
         email: response.data.email,
-        avatar: response.data.avatar || "",
-        shippingAddress: response.data.shippingAddress || {
-          fullName: "",
-          address: "",
-          city: "",
-          postalCode: "",
-          country: ""
-        }
+        avatar: response.data.avatar || ""
       });
     } catch (error) {
       console.error("Failed to fetch profile:", error);
@@ -80,19 +66,7 @@ const CustomerProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
-    if (name.startsWith("shippingAddress.")) {
-      const field = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        shippingAddress: {
-          ...prev.shippingAddress,
-          [field]: value
-        }
-      }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
   
 
@@ -185,16 +159,6 @@ const CustomerProfile = () => {
           Role: <span style={{ color: "#FF4E50" }}>{user.role}</span>
         </Text>
 
-        {/* Display Address Info */}
-        <Box mt={4}  textAlign="left">
-          <Heading fontSize="md" mb={2}>Shipping Address</Heading>
-          <Text><strong>Name:</strong> {formData.shippingAddress?.fullName}</Text>
-          <Text><strong>Address:</strong> {formData.shippingAddress?.address}</Text>
-          <Text><strong>City:</strong> {formData.shippingAddress?.city}</Text>
-          <Text><strong>Postal Code:</strong> {formData.shippingAddress?.postalCode}</Text>
-          <Text><strong>Country:</strong> {formData.shippingAddress?.country}</Text>
-        </Box>
-
         <Button
           leftIcon={<Icon as={FaUserEdit} />}
           colorScheme="teal"
@@ -241,28 +205,6 @@ const CustomerProfile = () => {
                       }
                     }}
                   />
-                </FormControl>
-
-                <Heading size="sm" mt={4}>Shipping Address</Heading>
-                <FormControl>
-                  <FormLabel>Full Name</FormLabel>
-                  <Input name="shippingAddress.fullName" value={formData.shippingAddress.fullName} onChange={handleChange} />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Street Address</FormLabel>
-                  <Input name="shippingAddress.address" value={formData.shippingAddress.address} onChange={handleChange} />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>City</FormLabel>
-                  <Input name="shippingAddress.city" value={formData.shippingAddress.city} onChange={handleChange} />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Postal Code</FormLabel>
-                  <Input name="shippingAddress.postalCode" value={formData.shippingAddress.postalCode} onChange={handleChange} />
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Country</FormLabel>
-                  <Input name="shippingAddress.country" value={formData.shippingAddress.country} onChange={handleChange} />
                 </FormControl>
               </Stack>
             </ModalBody>
