@@ -442,12 +442,12 @@ const Cart = () => {
                 <Text fontWeight="bold">{item.name}</Text>
                 <Text>Price: {item.price}</Text>
                 <HStack mt={2}>
-                  <IconButton size="sm" icon={<MinusIcon />} onClick={() => decrementQty(item.title)} />
+                  <IconButton size="sm" icon={<MinusIcon />} onClick={() => decrementQty(item._id)} />
                   <Text>{item.quantity || 1}</Text>
-                  <IconButton size="sm" icon={<AddIcon />} onClick={() => incrementQty(item.title)} />
+                  <IconButton size="sm" icon={<AddIcon />} onClick={() => incrementQty(item._id)} />
                 </HStack>
               </Box>
-              <Button size="sm" colorScheme="red" onClick={() => removeFromCart(item.title)}>
+              <Button size="sm" colorScheme="red" onClick={() => removeFromCart(item._id)}>
                 Remove
               </Button>
             </HStack>

@@ -10,42 +10,51 @@ export const CartProvider = ({ children }) => {
     return stored ? JSON.parse(stored) : [];
   });
 
-  // Save to localStorage on change
+  // Sync cart with localStorage
   useEffect(() => {
     localStorage.setItem("zidio_cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product) => {
+    console.log("Adding product to cart:", product); // Debug
+
+    if (!product?._id) {
+      console.error("Product missing _id:", product);
+      return;
+    }
+
     setCartItems((prev) => {
-      const existing = prev.find((item) => item.title === product.title);
+      const existing = prev.find((item) => item._id === product._id);
       if (existing) {
+        console.log("Product exists, increasing quantity");
         return prev.map((item) =>
-          item.title === product.title
+          item._id === product._id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
+      console.log("New product, adding to cart");
       return [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  const removeFromCart = (title) => {
-    setCartItems((prev) => prev.filter((item) => item.title !== title));
+  const removeFromCart = (_id) => {
+    setCartItems((prev) => prev.filter((item) => item._id !== _id));
   };
 
-  const incrementQty = (title) => {
+  const incrementQty = (_id) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.title === title ? { ...item, quantity: item.quantity + 1 } : item
+        item._id === _id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
-  const decrementQty = (title) => {
+  const decrementQty = (_id) => {
     setCartItems((prev) =>
       prev
         .map((item) =>
-          item.title === title && item.quantity > 1
+          item._id === _id && item.quantity > 1
             ? { ...item, quantity: item.quantity - 1 }
             : item
         )

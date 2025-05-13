@@ -1,140 +1,164 @@
+// pages/Shop.jsx
 import {
-    Box,
-    Heading,
-    Text,
-    SimpleGrid,
-    Image,
-    Button,
-    VStack,
-  } from '@chakra-ui/react';
-  import {useCart} from '../context/CartContext'
-  import CustomerNavbar from '../components/CustomerNavbar';
-  import { useToast } from '@chakra-ui/react';
-  
-  const tshirtProducts = [
-    {
-      name: 'Oversized Tee',
-      price: '₹699',
-      image: 'https://via.placeholder.com/200x200.png?text=Oversized+Tee',
-    },
-    {
-      name: 'Graphic Printed',
-      price: '₹799',
-       image: 'https://via.placeholder.com/200x200.png?text=Graphic+Tee',
-    },
-    {
-      name: 'Polo T-Shirt',
-      price: '₹999',
-      image: 'https://via.placeholder.com/200x200.png?text=Polo+Tee',
-    },
-    {
-      name: 'Crop Top (Women)',
-      price: '₹599',
-      image: 'https://via.placeholder.com/200x200.png?text=Crop+Top',
-    },
-  ];
-  
-  const themeProducts = [
-    {
-      name: 'Marvel Universe Tee',
-      price: '₹899',
-      image: 'https://via.placeholder.com/200x200.png?text=Marvel+Tee',
-    },
-    {
-      name: 'Anime Hero Tee',
-      price: '₹799',
-      image: 'https://via.placeholder.com/200x200.png?text=Anime+Tee',
-    },
-    {
-      name: 'Classic Comic Tee',
-      price: '₹849',
-      image: 'https://via.placeholder.com/200x200.png?text=Classic+Tee',
-    },
-    {
-      name: 'Star Wars Tee',
-      price: '₹999',
-      image: 'https://via.placeholder.com/200x200.png?text=Sci-Fi+Tee',
-    },
-  ];
-  
-  const ProductCard = ({ name, price, image }) => { 
-    
-    const {addToCart} = useCart();
-    const toast = useToast();
+  Box,
+  Heading,
+  SimpleGrid,
+  Image,
+  Text,
+  Button,
+  VStack,
+  Input,
+  Select,
+  useToast,
+  Flex,
+  IconButton,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useCart } from "../context/CartContext";
+import CustomerNavbar from "../components/CustomerNavbar";
+import { SearchIcon } from "@chakra-ui/icons";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-    const handleAddToCart = () => {
-        addToCart({name,price,image});
+const MotionBox = motion(Box);
 
-        toast({
-            title: "Added to cart",
-            description: `${name} has been added to your cart.`,
-            status: "success",
-            duration: 2000,
-            isClosable: true,
-            position: "top", 
-          });
+const ProductCate = () => {
+  const { addToCart } = useCart();
+  const toast = useToast();
+  const [products, setProducts] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/products")
+      .then((res) => {
+        setProducts(res.data);
+        setFiltered(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    let filteredList = products;
+    if (search) {
+      filteredList = filteredList.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
+    if (category) {
+      filteredList = filteredList.filter((p) => p.category === category);
+    }
+    setFiltered(filteredList);
+  }, [search, category, products]);
 
-    return (
+  const categories = [
+    "Oversized",
+    "Acid Wash",
+    "Graphic Printed",
+    "Solid Color",
+    "Polo T-Shirts",
+    "Sleeveless",
+    "Long Sleeve",
+    "Henley",
+    "Hooded",
+    "Crop Tops",
+    "Marvel Universe",
+    "DC Comics",
+    "Anime Superheroes",
+    "Classic Comics",
+    "Sci-Fi & Fantasy",
+    "Video Game Characters",
+    "Custom Fan Art",
+  ];
 
-    <Box
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      bg="white"
-      shadow="md"
-      _hover={{ transform: 'scale(1.02)', transition: '0.2s ease-in-out' }}
-    >
-      <Image src={image} alt={name} objectFit="cover" w="100%" h="200px" />
-      <Box p="4">
-        <Heading size="md" mb="2">
-          {name}
+  return (
+    <>
+      <CustomerNavbar />
+      <Box px={8} py={10} bgGradient="linear(to-br, #2b1055, #7597de)">
+        <Heading textAlign="center" color="white" mb={6} fontFamily="Bangers">
+          Explore the Superhero Multiverse Store 🦸‍♂️
         </Heading>
-        <Text fontWeight="bold" mb="3" color="teal.600">
-          {price}
-        </Text>
-        <Button colorScheme="purple" onClick={handleAddToCart} w="full">
-          Add to Cart
-        </Button>
+
+        <Flex gap={4} mb={6} justify="center" flexWrap="wrap">
+          <Input
+            placeholder="Search Superhero Merch..."
+            onChange={(e) => setSearch(e.target.value)}
+            w={["100%", "300px"]}
+            bg="white"
+          />
+          <Select
+            placeholder="Filter by Category"
+            onChange={(e) => setCategory(e.target.value)}
+            w={["100%", "200px"]}
+          >
+            {categories.map((cat, i) => (
+              <option key={i} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </Select>
+        </Flex>
+
+        <SimpleGrid columns={[1, 2, 3]} spacing={8}>
+          {filtered.map((product) => (
+            <MotionBox
+              key={product._id}
+              p={5}
+              rounded="2xl"
+              shadow="xl"
+              bg="white"
+              whileHover={{ scale: 1.05, rotate: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <VStack spacing={3}>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  boxSize="200px"
+                  objectFit="cover"
+                  rounded="md"
+                />
+                <Link to={`/product/${product._id}`}>
+                  <Text
+                    fontSize="lg"
+                    fontWeight="bold"
+                    _hover={{ color: "blue.400" }}
+                  >
+                    {product.name}
+                  </Text>
+                </Link>
+                <Text fontSize="md" color="gray.600">
+                  {product.category}
+                </Text>
+                <Text fontSize="xl" color="green.500">
+                  ₹{product.price}
+                </Text>
+                <Button
+                  colorScheme="purple"
+                  onClick={() => {
+                    
+                    addToCart(product);
+                    toast({
+                      title: "Added to cart",
+                      description: `${product.name} added!`,
+                      status: "success",
+                      duration: 2000,
+                      isClosable: true,
+                    });
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              </VStack>
+            </MotionBox>
+          ))}
+        </SimpleGrid>
       </Box>
-    </Box>
-  )
+    </>
+  );
 };
-  
-  const ComicCollection = () => {
-    return (
-        <>
-        <CustomerNavbar /> 
-      <Box bg="gray.100" py={10} px={5} minH="100vh">
-        <VStack spacing={10} maxW="7xl" mx="auto">
-          {/* T-Shirts Section */}
-          <Box w="full">
-            <Heading size="lg" mb={6} color="red.400">
-              👕 T-Shirt Types
-            </Heading>
-            <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={6}>
-              {tshirtProducts.map((product, index) => (
-                <ProductCard key={index} {...product} />
-              ))}
-            </SimpleGrid>
-          </Box>
-  
-          {/* Comic Themes Section */}
-          <Box w="full">
-            <Heading size="lg" mb={6} color="blue.500">
-              🎨 Comic-Based Themes
-            </Heading>
-            <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing={6}>
-              {themeProducts.map((product, index) => (
-                <ProductCard key={index} {...product} />
-              ))}
-            </SimpleGrid>
-          </Box>
-        </VStack>
-      </Box>
-      </>
-    );
-  };
-  
-  export default ComicCollection;
-  
+
+export default ProductCate;

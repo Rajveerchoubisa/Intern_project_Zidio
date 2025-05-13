@@ -23,8 +23,13 @@ import AdminUsers from "./pages/AdminUsers.jsx";
 import AdminCoupons from "./pages/AdminCoupons.jsx";
 import AdminAnalytics from "./pages/AdminAnalytics.jsx";
 import MyOrders from "./pages/MyOrder.jsx";
+import ProductDetails from "./pages/ProductDetails.jsx";
+import Footer from "./pages/Footer.jsx";
+import AdminFooter from "./pages/AdminFooter.jsx";
+import { useAuth } from "./context/AuthContext";
 
 function App() {
+  const { user } = useAuth();
   return (
     <Router>
       <Routes>
@@ -46,6 +51,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<Cancel />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
         <Route
           path="/admin/dashboard"
           element={
@@ -94,7 +100,9 @@ function App() {
         <Route path="admin/analytics" element={<AdminAnalytics />} />
 
         <Route path="/my-orders" element={<MyOrders />} />
+
       </Routes>
+      {user?.role === "admin" ? <AdminFooter /> : <Footer />}
     </Router>
   );
 }
