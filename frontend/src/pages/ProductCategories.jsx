@@ -33,7 +33,7 @@ const ProductCate = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/products`)
       .then((res) => {
         setProducts(res.data);
         setFiltered(res.data);

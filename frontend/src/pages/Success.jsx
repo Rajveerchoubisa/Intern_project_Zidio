@@ -25,7 +25,7 @@ const Success = () => {
 
     if (sessionId) {
       axios
-        .get(`http://localhost:5000/api/stripe/session/${sessionId}`)
+        .get(`${import.meta.env.VITE_BACKEND_URL}/api/stripe/session/${sessionId}`)
         .then((res) => {
           console.log("✅ Order fetched:", res.data);
           setOrder(res.data);

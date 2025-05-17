@@ -25,7 +25,7 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/products");
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
       console.log("✅ Products Fetched:", res.data);  // Debug log
       setProducts(res.data);
       setLoading(false);
@@ -42,7 +42,7 @@ const AdminProducts = () => {
   const handleDelete = async (productId) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:5000/api/products/${productId}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -34,7 +34,7 @@ import {
     useEffect(() => {
       const fetchProduct = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`);
           const { name, price, description, stock, category, image } = res.data;
           setFormData({ name, price, description, stock, category });
           if (image) setImages([image]);
@@ -80,7 +80,7 @@ import {
           image: images[0] || "",
         };
   
-        await axios.put(`http://localhost:5000/api/products/${id}`, productData, {
+        await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`, productData, {
           headers: { Authorization: `Bearer ${token}` },
         });
   

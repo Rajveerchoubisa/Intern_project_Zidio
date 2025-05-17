@@ -217,7 +217,7 @@ const AddProduct = () => {
         ratings: Number(formData.ratings) || 0,
       };
 
-      await axios.post("http://localhost:5000/api/products", productData, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/products`, productData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

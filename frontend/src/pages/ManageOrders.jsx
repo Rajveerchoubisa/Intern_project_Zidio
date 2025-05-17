@@ -25,7 +25,7 @@ const ManageOrders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/orders", {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ const ManageOrders = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/orders/${orderId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderId}`,
         { status: newStatus },
         {
           headers: {

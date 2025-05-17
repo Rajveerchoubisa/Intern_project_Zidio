@@ -12,26 +12,7 @@ import CustomerNavbar from "../components/CustomerNavbar";
 import { useCart } from "../context/CartContext.jsx";
 import { useEffect, useState } from "react";
 
-// const dummyProducts = [
-//   {
-//     id: 1,
-//     title: "Iron Man T-shirt",
-//     price: "₹799",
-//     image: "https://i.imgur.com/1vC6sZv.png",
-//   },
-//   {
-//     id: 2,
-//     title: "Thor Hammer Mug",
-//     price: "₹499",
-//     image: "https://i.imgur.com/0O8clz0.png",
-//   },
-//   {
-//     id: 3,
-//     title: "Spider-Man Hoodie",
-//     price: "₹999",
-//     image: "https://i.imgur.com/Y5ZQv7T.png",
-//   },
-// ];
+
 
 const Shop = () => {
   const { addToCart } = useCart();
@@ -45,7 +26,7 @@ const Shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }

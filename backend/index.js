@@ -11,13 +11,13 @@ import orderRoutes from './routes/orderRoutes.js';
 import stripeRoutes from './routes/stripeRoutes.js'
 import couponRoutes from './routes/couponRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
-
+const allowedOrigins = ["https://project-zidio.vercel.app"];
 
 dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // your frontend URL
+    origin: allowedOrigins,
     credentials: true,
   }));
 app.use(express.json());

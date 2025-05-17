@@ -42,7 +42,7 @@ const CustomerProfile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/auth/me", {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ const CustomerProfile = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:5000/api/auth/update-profile",
+        `${import.meta.env.VITE_BACKEND_URL}/api/auth/update-profile`,
         formData,
         {
           headers: {

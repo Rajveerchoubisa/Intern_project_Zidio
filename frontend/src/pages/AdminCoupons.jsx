@@ -28,7 +28,7 @@ const ManageCoupons = () => {
 
   const fetchCoupons = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/coupons", {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/coupons`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCoupons(res.data);
@@ -40,7 +40,7 @@ const ManageCoupons = () => {
   const handleCreate = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/coupons",
+        `${import.meta.env.VITE_BACKEND_URL}/api/coupons`,
         { code, discount, expiryDate },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -56,7 +56,7 @@ const ManageCoupons = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/coupons/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/coupons/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast({ title: "Coupon deleted", status: "info" });
