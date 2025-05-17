@@ -12,7 +12,6 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar() {
 
-  // Show navbar only on home page
 
   return (
     <Box
