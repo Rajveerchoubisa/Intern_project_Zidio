@@ -27,6 +27,8 @@ import {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
+          withCredentials: true 
+          
         });
         console.log("Login response:", res.data); 
         const data = await res.json();
