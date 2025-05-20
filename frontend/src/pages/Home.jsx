@@ -3,6 +3,7 @@
 import { Box, Button, Heading, Stack, Text, Image } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import superhero from '../assets/superhero.png'
 
 export default function Home() {
   return (
@@ -43,10 +44,10 @@ export default function Home() {
             </Link>
           </Stack>
         </Box>
-        <Image
-          src="/superhero-illustration.png"
+         <Image
+          src={superhero}
           alt="Hero Banner"
-          boxSize={{ base: 'xs', md: 'md' }}
+          boxSize={{ base: '500px', md: '500px' }}
           className="rounded-xl shadow-lg"
         />
       </Stack>

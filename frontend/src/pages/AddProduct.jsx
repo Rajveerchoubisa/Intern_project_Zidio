@@ -272,21 +272,9 @@ const AddProduct = () => {
             <FormLabel>Category</FormLabel>
             <Select name="category" value={formData.category} onChange={handleChange}>
               <option value="">Select Category</option>
-              <optgroup label="T-Shirt Types">
-                <option value="Oversized">Oversized</option>
-                <option value="Acid Wash">Acid Wash</option>
-                <option value="Graphic Printed">Graphic Printed</option>
-                <option value="Solid Color">Solid Color</option>
-                <option value="Polo T-Shirts">Polo T-Shirts</option>
-                <option value="Sleeveless">Sleeveless</option>
-                <option value="Long Sleeve">Long Sleeve</option>
-                <option value="Henley">Henley</option>
-                <option value="Hooded">Hooded</option>
-                <option value="Crop Tops">Crop Tops (Women)</option>
-              </optgroup>
               <optgroup label="Comic-Based Themes">
                 <option value="Marvel Universe">Marvel Universe</option>
-                <option value="DC Comics">DC Comics</option>
+                <option value="DC Comics">DC Comics</option> 
                 <option value="Anime Superheroes">Anime Superheroes</option>
                 <option value="Classic Comics">Classic Comics</option>
                 <option value="Sci-Fi & Fantasy">Sci-Fi & Fantasy</option>
