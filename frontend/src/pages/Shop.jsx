@@ -84,12 +84,12 @@ const Shop = () => {
                 <VStack spacing={3}>
                   <Image
                     src={product.image}
-                    alt={product.title}
+                    alt={product.name}
                     boxSize="200px"
                     objectFit="cover"
                   />
                   <Text fontSize="xl" fontWeight="bold">
-                    {product.title}
+                    {product.name}
                   </Text>
                   <Text fontSize="lg" color="green.600">
                     {product.price}
