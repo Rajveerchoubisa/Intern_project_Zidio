@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FaStore, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
 
 const CustomerNavbar = () => {
   const navigate = useNavigate();
@@ -72,8 +73,13 @@ const CustomerNavbar = () => {
         onClick={() => navigate('/cart')}
         mr={2}
         /> 
-
-
+        <IconButton
+        icon={<FaHeart />}
+        colorScheme="red"
+        variant= "ghost"
+        onClick={() => navigate('/cart')}
+        mr={2}
+        />
         <IconButton
           icon={<FaSignOutAlt />}
           colorScheme="red"
