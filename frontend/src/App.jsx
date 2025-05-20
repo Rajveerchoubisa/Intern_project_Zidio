@@ -26,6 +26,7 @@ import ProductDetails from "./pages/ProductDetails.jsx";
 import Footer from "./pages/Footer.jsx";
 import AdminFooter from "./pages/AdminFooter.jsx";
 import { useAuth } from "./context/AuthContext";
+import WishlistPage from "./pages/WishlistPage.jsx";
 
 function App() {
   const { user } = useAuth();
@@ -49,6 +50,7 @@ function App() {
         <Route path="/categories" element={<ProductCategories />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/wishlist" element={WishlistPage} />
         <Route path="/cancel" element={<Cancel />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route
