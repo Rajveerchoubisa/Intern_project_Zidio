@@ -77,7 +77,7 @@ const CustomerNavbar = () => {
         icon={<FaHeart />}
         colorScheme="red"
         variant= "ghost"
-        onClick={() => navigate('/cart')}
+        onClick={() => navigate('/wishlist')}
         mr={2}
         />
         <IconButton
