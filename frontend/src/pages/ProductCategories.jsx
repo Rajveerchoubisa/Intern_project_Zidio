@@ -20,6 +20,7 @@ import CustomerNavbar from "../components/CustomerNavbar";
 import { SearchIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useWishlist } from "../context/WishlistContext";
 
 const MotionBox = motion(Box);
 
@@ -30,6 +31,7 @@ const ProductCate = () => {
   const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   useEffect(() => {
     axios
@@ -55,16 +57,6 @@ const ProductCate = () => {
   }, [search, category, products]);
 
   const categories = [
-    "Oversized",
-    "Acid Wash",
-    "Graphic Printed",
-    "Solid Color",
-    "Polo T-Shirts",
-    "Sleeveless",
-    "Long Sleeve",
-    "Henley",
-    "Hooded",
-    "Crop Tops",
     "Marvel Universe",
     "DC Comics",
     "Anime Superheroes",
@@ -139,7 +131,6 @@ const ProductCate = () => {
                 <Button
                   colorScheme="purple"
                   onClick={() => {
-                    
                     addToCart(product);
                     toast({
                       title: "Added to cart",
@@ -152,6 +143,15 @@ const ProductCate = () => {
                 >
                   Add to Cart
                 </Button>
+                <button
+                  onClick={() => {
+                    isInWishlist(product._id)
+                      ? removeFromWishlist(product._id)
+                      : addToWishlist(product);
+                  }}
+                >
+                  {isInWishlist(product._id) ? "❤️" : "🤍"}
+                </button>
               </VStack>
             </MotionBox>
           ))}
