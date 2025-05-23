@@ -1,11 +1,15 @@
 // src/pages/AdminDashboard.jsx
 
+import AdminNavbar from "../components/AdminNavbar.jsx";
 import { Box, Flex, VStack, Text, Button } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
+    <>
+     <AdminNavbar />
     <Flex minH="100vh">
+     
       {/* Sidebar */}
       <Box w="250px" bg="purple.600" color="white" p={6}>
         <VStack spacing={5} align="stretch">
@@ -34,6 +38,7 @@ const AdminDashboard = () => {
         <Text>Manage your e-commerce store efficiently 🚀</Text>
       </Box>
     </Flex>
+    </>
   );
 };
 
