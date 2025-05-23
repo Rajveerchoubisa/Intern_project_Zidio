@@ -12,7 +12,7 @@ const WishlistPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">
+      <h2 className="text-3xl font-bold mb-8 text-center">
         ⭐ Your Wishlist
       </h2>
 
@@ -25,7 +25,7 @@ const WishlistPage = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-48 object-cover rounded-md mb-4"
+              className="w-full h-32 object-cover rounded-md mb-4"
             />
             <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
             <p className="text-yellow-400 font-bold mb-4">₹{item.price}</p>
