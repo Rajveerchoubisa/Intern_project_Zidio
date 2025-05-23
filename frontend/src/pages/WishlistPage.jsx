@@ -1,44 +1,89 @@
+import {
+  Box,
+  Heading,
+  Image,
+  Text,
+  Button,
+  SimpleGrid,
+  useColorModeValue,
+  Stack,
+} from "@chakra-ui/react";
 import { useWishlist } from "../context/WishlistContext";
 
 const WishlistPage = () => {
   const { wishlistItems, removeFromWishlist } = useWishlist();
 
-  if (wishlistItems.length === 0)
+  const bgCard = useColorModeValue("gray.100", "gray.800");
+  const textColor = useColorModeValue("gray.800", "white");
+
+  if (wishlistItems.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-        <p className="text-lg font-semibold">🦸 No items in your wishlist.</p>
-      </div>
+      <Box
+        className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Text fontSize="xl" fontWeight="bold" color="white">
+          🦸 No items in your wishlist.
+        </Text>
+      </Box>
     );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6">
-      <h2 className="text-3xl font-bold mb-8 text-center">
+    <Box
+      className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-6 py-10"
+    >
+      <Heading
+        as="h2"
+        size="xl"
+        textAlign="center"
+        mb={10}
+        className="text-yellow-400"
+      >
         ⭐ Your Wishlist
-      </h2>
+      </Heading>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
         {wishlistItems.map((item) => (
-          <div
+          <Box
             key={item._id}
-            className="bg-gray-800 rounded-xl shadow-lg p-4 hover:shadow-2xl transition duration-300"
+            bg={bgCard}
+            color={textColor}
+            borderRadius="xl"
+            boxShadow="xl"
+            p={4}
+            className="hover:shadow-2xl transition duration-300"
           >
-            <img
+            <Image
               src={item.image}
               alt={item.name}
-              className="w-full h-24 object-contain rounded-md mb-4"
+              borderRadius="md"
+              mb={4}
+              boxSize="150px"
+              objectFit="contain"
+              mx="auto"
             />
-            <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-            <p className="text-yellow-400 font-bold mb-4">₹{item.price}</p>
-            <button
-              onClick={() => removeFromWishlist(item._id)}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium"
-            >
-              Remove ❌
-            </button>
-          </div>
+            <Stack spacing={2} textAlign="center">
+              <Text fontSize="lg" fontWeight="bold">
+                {item.name}
+              </Text>
+              <Text fontSize="md" color="yellow.400" fontWeight="semibold">
+                ₹{item.price}
+              </Text>
+              <Button
+                onClick={() => removeFromWishlist(item._id)}
+                colorScheme="red"
+                variant="solid"
+              >
+                Remove ❌
+              </Button>
+            </Stack>
+          </Box>
         ))}
-      </div>
-    </div>
+      </SimpleGrid>
+    </Box>
   );
 };
 
