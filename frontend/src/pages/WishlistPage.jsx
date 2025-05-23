@@ -25,7 +25,7 @@ const WishlistPage = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-full h-32 object-cover rounded-md mb-4"
+              className="w-full h-24 object-contain rounded-md mb-4"
             />
             <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
             <p className="text-yellow-400 font-bold mb-4">₹{item.price}</p>
